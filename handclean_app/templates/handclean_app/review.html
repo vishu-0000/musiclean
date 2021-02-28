@@ -1,0 +1,49 @@
+{% extends "handclean_app/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+    {% block maincontent %}
+  
+    <div class ="row">
+        <div class="col-md-8">
+          <div class="container">
+            <p style="text-align: left;font-size:200%; "> Here are some quick poster🎶🎵 reviews by our users. 
+            </p>
+          {% for rev in review_done %}
+          <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <p class="mr-2" >{{ rev.jingle }}</a>
+                <small class="text-muted">{{ rev.date_posted }}</small>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p>{{ rev.myreview}}</p>
+                </div>
+                <div class="col-md-6">
+                  <img src={{ rev.char_pic }} class="center" width="30%"/>
+                </div>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-4" >
+          <div style="margin-top: 2rem;">
+               {% if messages%}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}" >
+                  {{message}}
+                </div>
+                {%endfor%}
+
+              {% endif %}
+          <form method="post" enctype="multipart/form-data" >
+            {% csrf_token %} {% crispy review review.helper %}
+          </form>
+        </div>
+      </div>
+      </div>
+      
+    {% endblock %}
